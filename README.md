@@ -69,7 +69,7 @@ You can analyze the taxonomy of samples on your local or Cloud computer by insta
   - **Smaller Taxonomy database** (~101 GB) with accompanying tax-analysis annotation for the Two Pass option:
     - **Taxonomy list file**:
       - A coronaviridae taxonomy list file is available.
-      - For other taxonomies besides coronaviridae, request a Taxonomy list from NCBI [HERE](mailto:EMAIL US HERE).
+      - For other taxonomies besides coronaviridae, request a Taxonomy list from NCBI [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov)..
   - **Entire Taxonomy database** (~188 GB) for Single Pass Option:
     - Requires a large amount of computing resources that personal computers cannot sustain.
     - We suggest using an organizational computer or cloud-based instance with multiple vCPUs designed for high performance.
@@ -206,11 +206,95 @@ For example: **export PATH**=/home/smithjenp/ncbi-outdir/ngs-tools/linux/gcc/x86
 ![Screenshot of Path](images/path.png)
 
 ## DBSS (smaller DB file)
-For those running the smaller DBSS file, request a Taxonomy list (tax_list.) for your taxonomy by emailing Email @email.gov. Save the Taxonomy list to your SRC directory.
+For those running the smaller DBSS file, request a Taxonomy list (tax_list.) for your taxonomy by emailing [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov). Save the Taxonomy list to your SRC directory.
 
-**Coronaviridae.tax_list Example**
+**Example: Coronaviridae.tax_list**
 
-You can use the coronaviridae.tax_list file and the sample fasta file saved here: 
+You can use the coronaviridae.tax_list file and the sample fasta file saved here:
+```
   SRC/ngs-tools/tools/tax/examples/example_data
-•	Sample Covid taxonomy list: coronaviridae.tax_list
-•	Sample Coronaviridae fasta file: sars2_example.fasta
+```
+  * **Sample Covid taxonomy list:** coronaviridae.tax_list
+  * **Sample Coronaviridae fasta file:** sars2_example.fasta
+
+1. To query the `.dbss` database, collect the following information in order to write the `aligns_to` command:
+   - **Path to database:** downloaded `tree_filter.dbss`.
+   - **Path to sequence data in FASTA format:**
+     - For data in other formats, use the SRA Toolkit to retrieve the SRA data and use `fasterq-dump --fasta` to transform it to FASTA format.
+
+2. Create a name for your output file:
+   - **Example:** `sars2_example.dbss.hits`.
+   - **Note:** The output directory will save in the current working directory.
+
+3. Write the _aligns_to_  command
+```
+$ aligns_to -dbss {path_to_downloaded tree_filter.dbss} -tax_list {path to tax list e.g., ./example_data/coronaviridae.tax_list} out {name of output folder e.g.,sars2_example.fasta.hits} {path to sequence data}
+```
+
+4. Run the _aligns__to command from the **example_data** directory. The **output file** will be saved in the _example_data_ directory
+
+For example,
+
+```
+aligns_to -dbss /netmnt/vast01/sra/sra01/tax_analysis/tree_filter.dbss  -tax_list /home/smithjenp/SRC/ngs-tools/tools/tax/examples/example_data/coronaviridae.tax_list -out sars2_example.dbss.hits /home/smithjenp/SRC/ngs-tools/tools/tax/examples/example_data/sars2_example.fasta
+```
+
+![Screenshot of aligns_to command](images/example_data.png)
+
+
+## Querying the .dbs Larger DB File
+From _SRC/ngs-tools/tools/tax/examples/example_data_, look for the following:
+
+1.	To query the .dbss or .dbs database, collect the following information in order to write the **aligns_to** command:
+‒	Path to database: downloaded tree_filter.dbs
+‒	Path to sequence data in fasta format
+
+Use the two fasta files below. They represent cancer data and Ebola virus data
+  * **Sample fasta file:** SRC/ngs-tools/tools/tax/examples/example_data/SRR1553418.fasta  
+  * **Sample fasta file:** SRC/ngs-tools/tools/tax/examples/example_data/SRR4841604.fasta
+
+    * For data in other formats, use the [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit) to retrieve the sra data and use [fasterq-dump - -fasta](https://github.com/jenpetsmit/tk_wiki/edit/main/05.-Using-Prefetch and Fasterq-dump.md#the-fasterq-dump-tool) to transform to fasta format
+2.	Create a name for your output file
+  * Example: output.dbs.hits
+
+The output directory will save in the current working directory.
+
+3.	Write the **aligns_to** command
+
+```
+$ aligns_to -dbss {path_to_downloaded tree_filter.dbss} -tax_list {path to tax list e.g., ./example_data/coronaviridae.tax_list} out {name of output folder e.g.,output.fasta.hits} {path to sequence data}
+```
+
+4.	Run the _aligns_to _command from the **example_data** directory. The **output file** will be saved in the_ example_data_ directory
+
+For example, 
+```
+aligns_to -dbss /path/to/tree_filter.dbss  -out output.dbs.hits /home/smithjenp/SRC/ngs-tools/tools/tax/examples/example_data/SRR1553418.fasta
+```
+
+## Taxonomy Rank 
+To see the output in Taxonomy rank, run _hits_to_report.sh_.
+
+The hits_to_report.sh command is located in the _SRC/ngs-tools/tools/tax/bin_.
+
+1.	From the _~SRC/ngs-tools/tools/tax/bin_, run the following:
+
+```
+ $ /home/<your path to SRC directory/SRC>/ngs-tools/tools/tax/bin/hits_to_report.sh ./output.dbs.hits
+```
+
+For example, **$ /home/smithjenp/SRC/ngs-tools/tools/tax/bin/hits_to_report.sh ./output.dbs.hits**
+
+![Screenshot of Taxonomy Rank](images/tax-hits.png)
+
+## Reference Sequence Genome References
+The NCBI RefSeq genomic database is supplemented with the viral genome set from nt and is used as the source for k-mer creation in both "coarse" and "fine" sets.
+Reference sequences were mapped to the taxonomy hierarchy using the NCBI Taxonomy database. The database contained 2,383,364 taxonomy nodes in March 2020.
+
+## How Can I Cite you?
+The publication associated with this tool is available here: https://pubmed.ncbi.nlm.nih.gov/34544477/
+
+## Contact SRA
+Contact SRA staff for assistance at [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov).
+
+
