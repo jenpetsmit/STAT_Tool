@@ -32,7 +32,7 @@ The STAT tool analyzes SRA submissions and produces metadata that is added to th
 
 ## Results Via NCBI 
 
-1. From Entrez, click on a **Run**. Optionally from the Run Browser, enter **SRR Accession**.
+1. From Entrez, click on a **Run**. Optionally from the Run Browser, enter an **SRR Accession**.
    ![Screenshot of SRA Record SRR000001](images/accession.png)
 
    The _Run Browser_ screen opens displaying the Metadata tab.
@@ -51,6 +51,9 @@ For information on searching AWS Taxonomy metadata, see [Athena](https://www.ncb
 ## Results Via GCP
 For information on searching GCP Taxonomy metadata, see [BigQuery](https://www.ncbi.nlm.nih.gov/sra/docs/sra-bigquery/).
 
+---
+
+
 # Install the STAT Tool with NCBI Database on Your Local Computer
 
 You can analyze the taxonomy of samples on your local or Cloud computer by installing the STAT Tool. This is good for analyzing the taxonomy of all samples, especially samples with a variety of organisms. You can enhance your sample’s metadata with accurate and easily searchable taxonomic information.
@@ -68,9 +71,9 @@ You can analyze the taxonomy of samples on your local or Cloud computer by insta
     - We suggest using an organizational computer or cloud-based instance with multiple vCPUs designed for high performance.
     - No taxonomy list is needed.
 
----
+ 
 
-## 3.1 How to Set Up the STAT Tool
+## How to Set Up the STAT Tool
 
 ### Two Database Options
 - **Smaller Database Option**:
@@ -99,7 +102,7 @@ For example:
  
 **export PATH=${PATH}:/home/smithjennifer/ANT_HOME/apache-ant-1.10.14/bin`**
 
-3. Install cmake:
+3. Install cmake
 
   * See [CMake Download Page](https://cmake.org/download/).
 
@@ -119,16 +122,16 @@ mkdir SRC
 
 7. Download one of the two database options to the SRC directory:
 
-# To Download:
+## To Download a Database:
 
 1. Download either the smaller databases with accompanying tax-analysis annotation or the one large database.
 
-   ### a. Smaller Database Option
+   #### a. Smaller Database Option
    - The `.dbss` file and the `.dbss.annotation` file must be saved in the same directory.
    - [Download the `.dbss` (~101 GB) file](https://sra-download.ncbi.nlm.nih.gov/traces/sra_references/tax_analysis/tree_filter.dbss).
    - [Download the `.dbss.annotation` file](https://sra-download.ncbi.nlm.nih.gov/traces/sra_references/tax_analysis/tree_filter.dbss.annotation).
 
-   ### b. Larger Database Option
+   #### b. Larger Database Option
    - [Download the `.dbs` (~188 GB) file](https://sra-download.ncbi.nlm.nih.gov/traces/sra_references/tax_analysis/tree_filter.dbs).
 
 2. From the SRC directory, clone the following repositories:
@@ -171,24 +174,28 @@ Note the SRC directory and the nbci-outdir directory each have three directories
   * The _SRC_ directory holds the git repositories
   * The _ncbi-outdir_ directory holds the **aligns_to** binary used by the STAT tool 
 
-4. For Linux to find the _aligns_to_ binary, run the export command with the path to the binary. 
+4. For Linux to find the _aligns_to_ binary, run the export command with the path to the binary.
+   
     a.	Run the following command from ncbi-outdir/ngs-tools directory to see the location of the binaries:
 
 ```
-./configure -s
+./configure -s  
 ```
 
-    b.	Copy the path to the right of TARGDIR
-     ‒		Build output path:
+   b. Copy the path to the right of TARGDIR
+    ‒		Build output path:
+
+
+For example (Your path will be slightly different from this example):
 ```
 TARGDIR = /home/smithjenp/ncbi-outdir/ngs-tools/linux/gcc/x86_64/rel
 ```
 
-Your path will be slightly different from this example.
+
 
 ![Screenshot of TARGDIR code](images/configure_s.png)
 
-    c.	Run the Export PATH command with the _path_ to the _aligns_to_ binary by writing the following command with **/bin:$PATH** added to the end:
+   c.	Run the Export PATH command with the _path_ to the _aligns_to_ binary by writing the following command with **/bin:$PATH** added to the end:
 
    ```
    export PATH=<path to your aligns_to binary>/bin:$PATH
@@ -198,8 +205,8 @@ For example: **export PATH**=/home/smithjenp/ncbi-outdir/ngs-tools/linux/gcc/x86
 
 ![Screenshot of Path](images/path.png)
 
-## DBSS (smaller DB file)
-For those running the smaller DBSS file, request a Taxonomy list (tax_list.) for your taxonomy by emailing [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov). Save the Taxonomy list to your SRC directory.
+## Querying the Smaller DB (DBSS)
+For those running the smaller DBSS file, you will need to request a Taxonomy list (tax_list.) for your taxonomy by emailing [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov). Save the Taxonomy list to your SRC directory.
 
 **Example: Coronaviridae.tax_list**
 
@@ -235,7 +242,7 @@ aligns_to -dbss /netmnt/vast01/sra/sra01/tax_analysis/tree_filter.dbss  -tax_lis
 ![Screenshot of aligns_to command](images/example_data.png)
 
 
-## Querying the .dbs Larger DB File
+## Querying the Larger DB File (.dbs)
 From _SRC/ngs-tools/tools/tax/examples/example_data_, look for the following:
 
 1.	To query the .dbss or .dbs database, collect the following information in order to write the **aligns_to** command:
