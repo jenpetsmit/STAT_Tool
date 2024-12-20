@@ -36,7 +36,7 @@ The STAT tool analyzes SRA submissions and produces metadata that is added to th
    ![Screenshot of SRA Record SRR000001](images/accession.png)
 
    The _Run Browser_ screen opens displaying the Metadata tab.
-2. Click the Analysis tab
+2. Click the **Analysis** tab
 
 ![Screenshot of the SRA Run Browser](images/run-browser.png)
 
@@ -206,11 +206,11 @@ For example: **export PATH**=/home/smithjenp/ncbi-outdir/ngs-tools/linux/gcc/x86
 ![Screenshot of Path](images/path.png)
 
 ## Querying the Smaller DB (DBSS)
-For those running the smaller DBSS file, you will need to request a Taxonomy list (tax_list.) for your taxonomy by emailing [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov). Save the Taxonomy list to your SRC directory.
+Before you can query DBSS, you need to request a Taxonomy list (tax_list.) for your taxonomy by emailing [sra@ncbi.nlm.nih.gov](sra@ncbi.nlm.nih.gov). Save the Taxonomy list to your SRC directory.
 
-**Example: Coronaviridae.tax_list**
+For this example, the Coronaviridae Tax List is available for download. 
 
-You can use the coronaviridae.tax_list file and the sample fasta file saved here:
+The coronaviridae.tax_list file and the sample fasta file are saved here:
 ```
   SRC/ngs-tools/tools/tax/examples/example_data
 ```
@@ -243,7 +243,6 @@ aligns_to -dbss /netmnt/vast01/sra/sra01/tax_analysis/tree_filter.dbss  -tax_lis
 
 
 ## Querying the Larger DB File (.dbs)
-From _SRC/ngs-tools/tools/tax/examples/example_data_, look for the following:
 
 1.	To query the .dbss or .dbs database, collect the following information in order to write the **aligns_to** command:
 ‒	Path to database: downloaded tree_filter.dbs
