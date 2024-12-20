@@ -1,5 +1,5 @@
 # STAT_Tool
-Instructions for using the NCBI SRA Taxonomy Analysis Tool (STAT) 
+This document provides instructions for using the NCBI SRA Taxonomy Analysis Tool (STAT).
 
 ## What is STAT? 
 
@@ -9,25 +9,18 @@ When users submit sequence data to NCBI Submission Portal, they include BioSampl
 
 ## What is the NCBI Taxonomy Database? 
 
-The STAT tool uses the [publicly-available NCBI Taxonomy database](#install-the-stat-Tool-with-ncbi-database-on-your-localcomputer) containing over 100,000 taxa.  The database is built from our entire sequence collection, which is terabytes of input sequences representing millions of unique k-mer. 
+The STAT tool uses the [publicly-available NCBI Taxonomy database](#install-the-stat-tool-with-ncbi-database-on-your-local-computer) containing over 100,000 taxa.  The database is built from our entire sequence collection, which is terabytes of input sequences representing millions of unique k-mer. 
 
-## What is a k-mer? 
+## What is a k-mer?     
 
-A k-mer is a unique sequence of DNA that is 32 base- pairs long and has its own taxonomic identification (Tax ID). 
+A k-mer is a unique sequence of DNA that is 32 base-pairs long and has its own taxonomic identification (Tax ID). 
 
 When users submit sequences to the SRA Archive, each run is compared against the Taxonomy Database. When the submission matches k-mers in the database, the results are added to the submission’s metadata to verify the submission. 
 
-| **Output**     | **Description**                                                                 |
-|-----------------|---------------------------------------------------------------------------------|
-| **tax_id**      | Integer ID of the taxonomy record                                              |
-| **rank**        | The taxonomic rank                                                             |
-| **name**        | Scientific name of the rank/organism                                           |
-| **total_count** | The total count is the number of k-mer hits for the records and all its children |
-| **self_count**  | The count of k-mer hits for the record itself                                  |
 
 ## How Does the STAT Tool Work? 
 
-STAT tool maps sequencing reads to a taxonomic hierarchy using a two-step strategy based on exact query read matches to precomputed k-mer dictionary databases. The two-step process reduces computational load.  
+The STAT tool maps sequencing reads to a taxonomic hierarchy using a two-step strategy based on exact query read matches to precomputed k-mer dictionary databases. The two-step process reduces computational load.  
 
 After a submission is uploaded via the SRA Submission Portal, STAT renders the input sequence into 32 bp k-mers and then matches values against a smaller database identifying taxa for deeper analysis.  The Tax Ids identified in step 1 are used to select the densely sampled k-mers derived from those taxa. Then STAT completes a second pass to focus its resources on a densely populated database of potential k-mers, thus enabling a refined output. 
 
