@@ -1,4 +1,4 @@
-# STAT_Tool
+# STAT Tool
 This document provides instructions for using the NCBI SRA Taxonomy Analysis Tool (STAT).
 
 ## What is STAT? 
